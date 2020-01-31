@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // Import Components
 import PostListItem from './PostListItem/PostListItem';
+import AddCommentWidget from './PostListItem/AddCommentWidget'
+
+// Import Style
+import styles from './PostListItem/PostListItem.css';
 
 function PostList(props) {
   return (
     <div className="listView">
       {
         props.posts.map(post => (
-          <PostListItem
-            post={post}
-            key={post.cuid}
-            onDelete={() => props.handleDeletePost(post.cuid)}
-          />
+          <div key={'wrapper' + post.cuid} className={styles['single-post']}>
+            <PostListItem
+              post={post}
+              key={post.cuid}
+              onDelete={() => props.handleDeletePost(post.cuid)}
+            />
+            <AddCommentWidget key={'form' + post.cuid}/>
+            <hr className={styles.divider}/>
+          </div>
         ))
       }
     </div>
