@@ -2,6 +2,7 @@ import Post from '../models/post';
 import cuid from 'cuid';
 import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
+import mongoose from 'mongoose';
 
 /**
  * Get all posts
@@ -76,5 +77,37 @@ export function deletePost(req, res) {
     post.remove(() => {
       res.status(200).end();
     });
+  });
+}
+
+/**
+ * Comment a post
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function commentPost(req, res) {
+  if (!req.body.name || !req.body.comment) {
+    res.status(403).end();
+  }
+
+  Post.findOneAndUpdate(
+    {cuid: req.params.cuid},
+    {
+      $push:
+        {
+          comments:
+            {
+              uid: mongoose.Types.ObjectId(),
+              name: req.body.name,
+              comment: req.body.comment
+            }
+        }
+    }
+  ).exec((err, updated) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({comment: updated});
   });
 }
