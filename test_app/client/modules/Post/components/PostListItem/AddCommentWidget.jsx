@@ -29,7 +29,7 @@ class AddCommentWidget extends Component {
              onClick={(e)=> { e.nativeEvent.preventDefault(); this.toggleFormHandler(this.props.postId)}}>
             <FormattedMessage id="addComment"/>
           </a>
-        {this.props.postIdToComment === this.props.postId && <AddCommentForm onSubmit = { this.handleFormSubmit } initialValues={{name:'username',comment: 'some comment' }} />}
+        {this.props.postIdToComment === this.props.postId && <AddCommentForm onSubmit = { this.handleFormSubmit } />}
         </div>
       </Fragment>
     )
