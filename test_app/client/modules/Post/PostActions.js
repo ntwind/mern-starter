@@ -5,6 +5,7 @@ export const ADD_POST = 'ADD_POST';
 export const ADD_POSTS = 'ADD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
 export const COMMENT_POST = 'COMMENT_POST';
+export const ADD_COMMENT_TO_POST = 'ADD_COMMENT_TO_POST';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
@@ -64,7 +65,7 @@ export function deletePostRequest(cuid) {
 
 export function addComment(cuid, comment) {
   return {
-    type: COMMENT_POST,
+    type: ADD_COMMENT_TO_POST,
     cuid,
     comment,
   };
@@ -78,5 +79,12 @@ export function commentPostRequest(cuid, comment) {
         comment: comment.comment
       },
     ).then(res => dispatch(addComment(cuid, res.comment)));
+  };
+}
+
+export function commentPost(cuid) {
+  return {
+    type: COMMENT_POST,
+    cuid
   };
 }

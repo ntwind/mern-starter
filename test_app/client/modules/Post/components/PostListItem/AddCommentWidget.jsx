@@ -2,18 +2,21 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import AddCommentForm from './CommentForm'
+import { connect } from 'react-redux';
 // Import Style
 import styles from './PostListItem.css';
+import {getPostIdToComment} from "../../PostReducer";
+import {commentPost} from "../../PostActions";
 
-export default class AddCommentWidget extends Component {
+class AddCommentWidget extends Component {
   constructor(props) {
     super(props);
     this.state = { formIsOpen: false };
     this.toggleFormHandler = this.toggleForm.bind(this);
   }
 
-  toggleForm(){
-    this.setState({formIsOpen: !this.state.formIsOpen})
+  toggleForm(cid){
+    return this.props.dispatch(commentPost(cid));
   }
 
   handleFormSubmit = (formVals) => { this.props.handleAddComment(formVals) };
@@ -23,12 +26,19 @@ export default class AddCommentWidget extends Component {
       <Fragment>
         <div className={styles['post-action']}>
           <a href="#"
-             onClick={(e)=> { e.nativeEvent.preventDefault(); this.toggleFormHandler()}}>
+             onClick={(e)=> { e.nativeEvent.preventDefault(); this.toggleFormHandler(this.props.postId)}}>
             <FormattedMessage id="addComment"/>
           </a>
-        {this.state.formIsOpen && <AddCommentForm onSubmit = { this.handleFormSubmit } initialValues={{name:'username',comment: 'some comment' }} />}
+        {this.props.postIdToComment === this.props.postId && <AddCommentForm onSubmit = { this.handleFormSubmit } initialValues={{name:'username',comment: 'some comment' }} />}
         </div>
       </Fragment>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    postIdToComment: getPostIdToComment(state),
+  };
+}
+export default connect(mapStateToProps)(AddCommentWidget);
