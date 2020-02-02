@@ -23,7 +23,7 @@ const PostReducer = (state = initialState, action) => {
     case ADD_COMMENT_TO_POST :
       if(1) { // creating scope to use 'let'
         let post = state.data.find(post => post.cuid === action.cuid);
-        post.comments.push([action.comment]);
+        post.comments.push( action.comment );
         return { data: [ ...state.data], addingCommentToPost: void 0}
       }
 
@@ -40,9 +40,10 @@ const PostReducer = (state = initialState, action) => {
     case UPDATE_COMMENT :
       if(1) {
         let post = state.data.find(post => post.cuid === action.cuid);
-        let comment = post.comments.find(comment => comment[0].uid === action.uid );
-        comment[0].name = action.name;
-        comment[0].comment = action.comment;
+        let comment = post.comments.find(comment => comment.uid === action.uid );
+        comment.name = action.name;
+        comment.comment = action.comment;
+
         return { data: [ ...state.data], editingCommentUid: void 0}
       }
 
@@ -57,7 +58,7 @@ const PostReducer = (state = initialState, action) => {
 export const getPosts = state => state.posts.data;
 
 // Get post by cuid
-export const getPost = (state, cuid) => state.posts.data.filter(post => post.cuid === cuid)[0];
+export const getPost = (state, cuid) => state.posts.data.filter(post => post.cuid === cuid);
 
 // Get post cid to comment
 export const getPostIdToComment = state => state.posts.addingCommentToPost;

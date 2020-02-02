@@ -18,22 +18,22 @@ function PostComments(props) {
       {
         props.comments.map(comment => (
 
-          <li key={ comment[0].uid } className={ styles['comments-item'] }>
-            { props.commentIdToEdit === comment[0].uid
+          <li key={ comment.uid } className={ styles['comments-item'] }>
+            { props.commentIdToEdit === comment.uid
               ?
-              <EditCommentForm key={comment[0].uid} className={ styles['flex-grow'] } onSubmit = { handleFormSubmit(comment[0].uid) } initialValues={{name:comment[0].name, comment: comment[0].comment }} />
+              <EditCommentForm key={comment.uid} className={ styles['flex-grow'] } onSubmit = { handleFormSubmit(comment.uid) } initialValues={{name:comment.name, comment: comment.comment }} />
               :
 
             <Fragment>
               <div>
-                <div>Name: {comment[0].name} </div>
-                <div>Comment: {comment[0].comment}</div>
+                <div>Name: {comment.name} </div>
+                <div>Comment: {comment.comment}</div>
               </div>
 
               <div>
                 <a href='#' onClick={(e) => {
                   e.preventDefault();
-                  handleEditClick(comment[0].uid)
+                  handleEditClick(comment.uid)
                 }}> Edit</a>
               </div>
             </Fragment>
