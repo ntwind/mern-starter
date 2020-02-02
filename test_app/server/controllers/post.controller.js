@@ -90,24 +90,25 @@ export function commentPost(req, res) {
   if (!req.body.name || !req.body.comment) {
     res.status(403).end();
   }
+  let comment =
+    {
+      uid: mongoose.Types.ObjectId(),
+      name: req.body.name,
+      comment: req.body.comment
+    };
 
   Post.findOneAndUpdate(
     {cuid: req.params.cuid},
     {
       $push:
         {
-          comments:
-            {
-              uid: mongoose.Types.ObjectId(),
-              name: req.body.name,
-              comment: req.body.comment
-            }
+          comments: comment
         }
     }
-  ).exec((err, updated) => {
+  ).exec((err, post) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({comment: updated});
+    res.json({comment: comment});
   });
 }
