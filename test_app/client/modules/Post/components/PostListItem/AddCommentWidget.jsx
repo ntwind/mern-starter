@@ -16,12 +16,17 @@ export default class AddCommentWidget extends Component {
     this.setState({formIsOpen: !this.state.formIsOpen})
   }
 
+  handleFormSubmit = (formVals) => { this.props.handleAddComment(formVals) };
+
   render () {
     return (
       <Fragment>
-        <div className={styles['post-action']}><a href="#" onClick={(e)=> { e.nativeEvent.preventDefault(); this.toggleFormHandler()}}><FormattedMessage
-          id="addComment"/></a>
-        {this.state.formIsOpen && <AddCommentForm/>}
+        <div className={styles['post-action']}>
+          <a href="#"
+             onClick={(e)=> { e.nativeEvent.preventDefault(); this.toggleFormHandler()}}>
+            <FormattedMessage id="addComment"/>
+          </a>
+        {this.state.formIsOpen && <AddCommentForm onSubmit = { this.handleFormSubmit } initialValues={{name:'username',comment: 'some comment' }} />}
         </div>
       </Fragment>
     )

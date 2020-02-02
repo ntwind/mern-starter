@@ -60,7 +60,7 @@ const renderTextArea = ({
   <div>
     <label className={styles['form-label']}>{label}</label>
     <div>
-      <textarea {...input} className={className} placeholder={label} type={type} />
+      <textarea {...input} className={className} placeholder={label} />
       {touched &&
       ((error && <span className={`${styles.error} ${styles.hint}`}>{error}</span>) ||
         (warning && <span className={`${styles.warn} ${styles.hint}`}>{warning}</span>))}
@@ -80,17 +80,17 @@ const AddCommentForm = props => {
       <div className={styles['form-content']}>
         <Field
           className={styles['form-field']}
-          name="username"
+          name="name"
           type="text"
           component={renderField}
-          label="Username"
+          label="Name"
           validate={[required, maxLength15, minLength2]}
           warn={alphaNumeric}
         />
 
         <Field
           className={styles['form-field']}
-          name="Comment"
+          name="comment"
           type="text"
           component={renderTextArea}
           label="Comment"

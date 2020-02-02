@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 // Import Components
 import PostListItem from './PostListItem/PostListItem';
 import AddCommentWidget from './PostListItem/AddCommentWidget'
+import PostComments from './PostListItem/PostComments'
+
 
 // Import Style
 import styles from './PostListItem/PostListItem.css';
@@ -19,7 +21,8 @@ function PostList(props) {
               key={post.cuid}
               onDelete={() => props.handleDeletePost(post.cuid)}
             />
-            <AddCommentWidget key={'form' + post.cuid}/>
+            { post.comments.length ? <div> Comments: <PostComments comments={post.comments} /></div> : null }
+            <AddCommentWidget key={'form' + post.cuid} handleAddComment = {( postId => data => { props.handleAddComment( postId, data )})( post.cuid ) }/>
             <hr className={styles.divider}/>
           </div>
         ))

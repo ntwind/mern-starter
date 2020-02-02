@@ -1,0 +1,9 @@
+.comments {
+  margin-left: 15px;
+  list-style-type: none;
+}
+
+.comments-item {
+  border: none;
+  margin: 5px 0;
+}

@@ -1,4 +1,4 @@
-import { ADD_POST, ADD_POSTS, DELETE_POST } from './PostActions';
+import {ADD_POST, ADD_POSTS, COMMENT_POST, DELETE_POST} from './PostActions';
 
 // Initial State
 const initialState = { data: [] };
@@ -20,6 +20,12 @@ const PostReducer = (state = initialState, action) => {
         data: state.data.filter(post => post.cuid !== action.cuid),
       };
 
+    case COMMENT_POST :
+      if(1) { // creating scope to use 'let'
+        let post = state.data.find(post => post.cuid === action.cuid);
+        post.comments.push([action.comment]);
+        return { data: [ ...state.data]}
+      }
     default:
       return state;
   }

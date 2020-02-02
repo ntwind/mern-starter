@@ -4,6 +4,9 @@ import callApi from '../../util/apiCaller';
 export const ADD_POST = 'ADD_POST';
 export const ADD_POSTS = 'ADD_POSTS';
 export const DELETE_POST = 'DELETE_POST';
+export const COMMENT_POST = 'COMMENT_POST';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // Export Actions
 export function addPost(post) {
@@ -56,5 +59,24 @@ export function deletePost(cuid) {
 export function deletePostRequest(cuid) {
   return (dispatch) => {
     return callApi(`posts/${cuid}`, 'delete').then(() => dispatch(deletePost(cuid)));
+  };
+}
+
+export function addComment(cuid, comment) {
+  return {
+    type: COMMENT_POST,
+    cuid,
+    comment,
+  };
+}
+
+export function commentPostRequest(cuid, comment) {
+  return (dispatch) => {
+    return callApi(`comments/${cuid}`, 'post',
+      {
+        name: comment.name,
+        comment: comment.comment
+      },
+    ).then(res => dispatch(addComment(cuid, res.comment)));
   };
 }
