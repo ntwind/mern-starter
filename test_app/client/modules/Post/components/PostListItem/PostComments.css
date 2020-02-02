@@ -6,4 +6,11 @@
 .comments-item {
   border: none;
   margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed gainsboro;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }

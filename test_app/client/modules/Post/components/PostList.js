@@ -21,8 +21,12 @@ function PostList(props) {
               key={post.cuid}
               onDelete={() => props.handleDeletePost(post.cuid)}
             />
-            { post.comments.length ? <div> Comments: <PostComments comments={post.comments} /></div> : null }
-            <AddCommentWidget postId={post.cuid} key={'form' + post.cuid} handleAddComment = {( postId => data => { props.handleAddComment( postId, data )})( post.cuid ) }/>
+            { post.comments.length ? <div> Comments: <PostComments comments={post.comments}   handleEditComment = { ( cuid => data => { props.handleEditComment( cuid, data )})( post.cuid ) } /></div> : null }
+            <AddCommentWidget
+              postId={post.cuid}
+              key={'form' + post.cuid}
+              handleAddComment = {( postId => data => { props.handleAddComment( postId, data )})( post.cuid ) }
+            />
             <hr className={styles.divider}/>
           </div>
         ))
