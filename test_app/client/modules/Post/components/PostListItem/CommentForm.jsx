@@ -68,15 +68,15 @@ const renderTextArea = ({
   </div>
 );
 
-const AddCommentForm = props => {
-  const { invalid, handleSubmit, submitting } = props;
+const CommentForm = props => {
+  const { className, invalid, handleSubmit, submitting } = props;
   const formCls = `${styles.form} ${styles.appear}`;
   const submitBtnCls = (invalid || submitting)
                        ? `${styles['post-submit-button']} ${styles['post-submit-button-disabled']}`
                        : `${styles['post-submit-button']}`;
 
   return (
-    <form onSubmit={handleSubmit} className={formCls}>
+    <form onSubmit={handleSubmit} className={[className, formCls].join(' ')}>
       <div className={styles['form-content']}>
         <Field
           className={styles['form-field']}
@@ -109,5 +109,6 @@ const AddCommentForm = props => {
 };
 
 export default reduxForm({
-  form: 'fieldLevelValidation' // a unique identifier for this form
-})(AddCommentForm)
+  form: 'fieldLevelValidation', // a unique identifier for this form,
+  enableReinitialize: true
+})(CommentForm)
