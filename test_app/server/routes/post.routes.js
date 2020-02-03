@@ -17,4 +17,7 @@ router.route('/posts/:cuid').delete(PostController.deletePost);
 // Comment a post by cuid
 router.route('/comments/:cuid').post(PostController.commentPost);
 
+// Comment a post by cuid
+router.route('/comments/:cuid').put(PostController.updateComment);
+
 export default router;

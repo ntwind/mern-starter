@@ -93,12 +93,12 @@ export function commentPost(req, res) {
   let comment =
     {
       uid: mongoose.Types.ObjectId(),
-      name: req.body.name,
-      comment: req.body.comment
+      name: sanitizeHtml(req.body.name),
+      comment: sanitizeHtml(req.body.comment)
     };
 
   Post.findOneAndUpdate(
-    {cuid: req.params.cuid},
+    { cuid: req.params.cuid },
     {
       $push:
         {
@@ -110,5 +110,29 @@ export function commentPost(req, res) {
       res.status(500).send(err);
     }
     res.json({comment: comment});
+  });
+}
+
+export function updateComment(req, res) {
+  if (!req.body.uid || !req.body.name || !req.body.comment) {
+    res.status(403).end();
+  }
+  let  ObjectId = mongoose.Types.ObjectId;
+
+  Post.update(
+    { cuid: req.params.cuid, "comments.uid": ObjectId(req.body.uid) },
+    {
+      $set:
+        {
+          "comments.$.name": sanitizeHtml(req.body.name),
+          "comments.$.comment": sanitizeHtml(req.body.comment)
+        }
+    }
+  ).exec((err, post) => {
+
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.status(200).end();
   });
 }

@@ -106,12 +106,13 @@ export function updateComment(data) {
 
 export function editCommentRequest({cuid, uid, name, comment}) {
   return (dispatch) => {
-    dispatch(updateComment({cuid, uid, name, comment}));
-    // return callApi(`comments/${cuid}`, 'post',
-    //   {
-    //     name: comment.name,
-    //     comment: comment.comment
-    //   },
-    // ).then(res => dispatch(updateComment({cuid, uid, name, comment})));
+
+    return callApi(`comments/${cuid}?`, 'put',
+      {
+        uid:uid,
+        name: name,
+        comment: comment
+      },
+    ).then(res => dispatch(updateComment({cuid, uid, name, comment})));
   };
 }
